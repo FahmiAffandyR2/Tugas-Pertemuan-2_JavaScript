@@ -53,58 +53,64 @@
     </table>
 
     <script>
-        //Data Pegawai
-        let pegawai = [
-        { nama: "Dodi Prayodi", umur: 25, jabatan: "Manajer", status: "Menikah" }
-        ];
+        // Data Pegawai
+        let pegawai = {
+            nama: "Dodi Prayodi",
+            umur: 25, 
+            jabatan: "Manajer", 
+            status: "Menikah" 
+        };
 
-        let tbody = document.getElementById("dataPegawai");
+        // Variabel untuk total keseluruhan gaji
         let totalSemua = 0;
 
-        //forEach otomatis akan jalan ke setiap item di dalam array tanpa perlu tulis
-        pegawai.forEach(g => {
-            //Gaji Pokok
-            let gajiPokok = 0;
-            if (g.jabatan === "Manajer"){
-                gajiPokok = 15000000;
-            } else if (g.jabatan === "Asisten manajer") {
-                gajiPokok = 10000000;
-            } else if (g.jabatan === "Staff") {
-                gajiPokok = 5000000;
-            }
+        // Hitung gaji pokok
+        let gajiPokok = 0;
+        if (pegawai.jabatan === "Manajer") {
+            gajiPokok = 15000000;
+        } else if (pegawai.jabatan === "Asisten Manajer") {
+            gajiPokok = 10000000;
+        } else if (pegawai.jabatan === "Staff") {
+            gajiPokok = 5000000;
+        }
+        console.log("Gaji Pokok:", gajiPokok);
 
-            // Tunjangan Jabatan 15%
-            let tunjanganJabatan = 0.15 * gajiPokok;
+        // Tunjangan Jabatan 15%
+        let tunjanganJabatan = 0.15 * gajiPokok;
+        console.log("Tunjangan Jabatan:", tunjanganJabatan);
 
-            // BPJS 10%
-            let bpjs = 0.10 * gajiPokok
+        // BPJS 10%
+        let bpjs = 0.10 * gajiPokok;
+        console.log("BPJS:", bpjs);
 
-            // Tunjangan Keluarga Menggunakan ternary
-            let tunjanganKeluarga = (g.status === "Menikah") ? 0.20 * gajiPokok : 0;
+        // Tunjangan Keluarga (ternary)
+        let tunjanganKeluarga = (pegawai.status === "Menikah") ? 0.20 * gajiPokok : 0;
+        console.log("Tunjangan Keluarga:", tunjanganKeluarga);
 
-            // Total Gaji
-            let total = gajiPokok + tunjanganJabatan + tunjanganKeluarga - bpjs;
+        // Total Gaji per pegawai
+        let total = gajiPokok + tunjanganJabatan + tunjanganKeluarga - bpjs;
+        totalSemua += total;
+        console.log("Total Gaji:", total);
 
-            totalSemua += total;
+        // Tampilkan ke tbody HTML
+        let tbody = document.getElementById("dataPegawai");
+        tbody.innerHTML = `
+            <tr>
+                <td>${pegawai.nama}</td>
+                <td>${pegawai.umur}</td>
+                <td>${pegawai.jabatan}</td>
+                <td>${pegawai.status}</td>
+                <td>Rp ${gajiPokok.toLocaleString()}</td>
+                <td>Rp ${tunjanganJabatan.toLocaleString()}</td>
+                <td>Rp ${bpjs.toLocaleString()}</td>
+                <td>Rp ${tunjanganKeluarga.toLocaleString()}</td>
+                <td>Rp ${total.toLocaleString()}</td>
+            </tr>
+        `;
 
-            // menambahkan baris tabel
-            let tr = `
-                <tr>
-                    <td>${g.nama}</td>
-                    <td>${g.umur}</td>
-                    <td>${g.jabatan}</td>
-                    <td>${g.status}</td>
-                    <td>Rp ${gajiPokok.toLocaleString()}</td>
-                    <td>Rp ${tunjanganJabatan.toLocaleString()}</td>
-                    <td>Rp ${bpjs.toLocaleString()}</td>
-                    <td>Rp ${tunjanganKeluarga.toLocaleString()}</td>
-                    <td>Rp ${total.toLocaleString()}</td>
-                </tr>
-            `;
-            tbody.innerHTML += tr;
-        });
-
+        // Tampilkan total keseluruhan di tfoot
         document.getElementById("totalSemua").innerText = "Rp " + totalSemua.toLocaleString();
     </script>
 </body>
+</html>
 </html>
